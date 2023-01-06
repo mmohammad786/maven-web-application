@@ -33,7 +33,12 @@ stages{
 	  sh  "docker build -t mmohammad786/mavenwebapp:${revision} ."
   }
   }	
-	
+  stage('Dockerpush'){
+  steps{
+	  sh  "docker login -u mmohammad786 -p P9989095189s@"
+	  sh  "docker push mmohammad786/mavenwebapp:${revision}"
+  }
+  }		
 /*
  stage('ExecuteSonarQubeReport'){
   steps{
