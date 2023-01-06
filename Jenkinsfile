@@ -1,3 +1,4 @@
+def revision = "1.0.${env.BUILD_ID}" 
 pipeline{
 
 agent any
@@ -17,16 +18,22 @@ stages{
 
   stage('CheckOutCode'){
     steps{
-    git branch: 'development', credentialsId: '957b543e-6f77-4cef-9aec-82e9b0230975', url: 'https://github.com/devopstrainingblr/maven-web-application-1.git'
+    git branch: 'master', credentialsId: 'gitcred', url: 'https://github.com/mmohammad786/maven-web-application.git'
 	
 	}
   }
   
-  stage('Build'){
+  stage('MavenBuild'){
   steps{
   sh  "mvn clean package"
   }
   }
+  stage('DockerBuild'){
+  steps{
+	  sh  "docker build -t mmohammad786/mavenwebapp:${revision} ."
+  }
+  }	
+	
 /*
  stage('ExecuteSonarQubeReport'){
   steps{
